@@ -16,15 +16,12 @@ public class TestSuiteMagento extends BaseTest {
 
     @DataProvider(name = "data")
     public Object[][] getData(Method method) {
-        switch (method.getName()) {
-            case "testCase01":
-                return ExcelUtils.getTestData("src/test/resources/TestData.xlsx", "TC01", 0, 5);
+        return switch (method.getName()) {
+            case "testCase01" -> ExcelUtils.getTestData("src/test/resources/TestData.xlsx", "TC01", 0, 5);
+            case "testCase02" -> ExcelUtils.getTestData("src/test/resources/TestData.xlsx", "TC02", 0, 7);
+            default -> null;
+        };
 
-            case "testCase02":
-                return ExcelUtils.getTestData("src/test/resources/TestData.xlsx","TC02",0,7);
-        }
-
-        return null;
     }
 
     @Test(dataProvider = "data", enabled = false)
