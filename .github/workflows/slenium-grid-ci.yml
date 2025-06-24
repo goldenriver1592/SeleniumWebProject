@@ -98,7 +98,7 @@ jobs:
 
       - name: Upload Allure results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-results-${{ matrix.browser }}
           path: target/allure-results
