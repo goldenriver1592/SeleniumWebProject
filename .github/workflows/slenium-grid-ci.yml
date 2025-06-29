@@ -87,6 +87,12 @@ jobs:
           merge-multiple: true
           path: target/allure-results
 
+      - name: Download & Install Allure CLI
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.19.0/allure-2.19.0.tgz
+          sudo tar zxvf allure-2.19.0.tgz -C /opt/
+          sudo ln -s /opt/allure-2.19.0/bin/allure /usr/local/bin/allure
+
       - name: Generate merged Allure report
         run: |
           allure generate target/allure-results \
