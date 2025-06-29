@@ -7,14 +7,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 
 public class ExcelUtils {
-    public static XSSFWorkbook xssfWorkbook;
-    public static XSSFSheet xssfSheet;
     public static Object[][] getTestData(String filePath, String sheetName, int startCol, int totalCols) {
         String [][] table = null;
-        try {
-            FileInputStream fileInputStream = new FileInputStream(filePath);
-            xssfWorkbook = new XSSFWorkbook(fileInputStream);
-            xssfSheet = xssfWorkbook.getSheet(sheetName);
+        try (FileInputStream fileInputStream = new FileInputStream(filePath);
+            XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fileInputStream)) {
+            XSSFSheet xssfSheet = xssfWorkbook.getSheet(sheetName);
             int startRows = 1;
             int ci = 0, cj = 0;
             int totalRows = xssfSheet.getLastRowNum();

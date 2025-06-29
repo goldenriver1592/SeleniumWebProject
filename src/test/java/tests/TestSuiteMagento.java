@@ -1,6 +1,8 @@
 package tests;
 
 import core.BaseTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -14,17 +16,21 @@ import java.lang.reflect.Method;
 
 public class TestSuiteMagento extends BaseTest {
 
-    @DataProvider(name = "data")
-    public Object[][] getData(Method method) {
+    private static final Logger log = LoggerFactory.getLogger(TestSuiteMagento.class);
+
+    @DataProvider(name = "data", parallel = true)
+    public Object[][] getData(Method method){
         return switch (method.getName()) {
             case "testCase01" -> ExcelUtils.getTestData("src/test/resources/TestData.xlsx", "TC01", 0, 5);
             case "testCase02" -> ExcelUtils.getTestData("src/test/resources/TestData.xlsx", "TC02", 0, 7);
+            case "testCase03" -> ExcelUtils.getTestData("src/test/resources/TestData.xlsx", "TC03", 0, 5);
+            case "testCase04" -> ExcelUtils.getTestData("src/test/resources/TestData.xlsx", "TC04", 0, 4);
             default -> null;
         };
 
     }
 
-    @Test(dataProvider = "data", enabled = false)
+    @Test(dataProvider = "data")
     public void testCase01(String TCid, String url, String username, String password, String titleExpected) {
 
         LoginPage loginPage = new LoginPage(getDriver());
@@ -63,7 +69,7 @@ public class TestSuiteMagento extends BaseTest {
         try {
             Assert.assertTrue(newCustomerPage.verifyInput());
         } catch (Exception e) {
-            System.out.println(e);
+            log.error("error: ", e);
         }
 
         allCustomersPage.navigationBar.clickOnCustomerMenu();
@@ -77,4 +83,13 @@ public class TestSuiteMagento extends BaseTest {
         allCustomersPage.deleteSelectedCustomer();
     }
 
+    @Test(dataProvider = "data")
+    public void testCase03(String TCid, String url, String username, String password, String SearchValue) {
+        System.out.println("pass");
+    }
+
+    @Test(dataProvider = "data")
+    public void testCase04(String TCid, String url, String username, String password) {
+        System.out.println("pass");
+    }
 }

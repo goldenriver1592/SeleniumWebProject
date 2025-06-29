@@ -21,33 +21,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  grid-tests:
-    name: Test on ${{ matrix.os }} - ${{ matrix.browser }}
+  test-linux:
+    name: Ubuntu-Latest Grid
+    runs-on: ubuntu-latest
     timeout-minutes: 30
 
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-latest
-            browser: chrome
-          - os: ubuntu-latest
-            browser: firefox
-          - os: ubuntu-latest
-            browser: edge
-          - os: windows-latest
-            browser: chrome
-          - os: windows-latest
-            browser: firefox
-          - os: windows-latest
-            browser: edge
-          - os: macos-latest
-            browser: chrome
-          - os: macos-latest
-            browser: firefox
-
-    runs-on: ${{ matrix.os }}
-    # Define Hub and Node containers as services
+        browser: ["chrome", "firefox", "edge"]
     services:
       selenium-hub:
         image: selenium/hub:4.33.0
@@ -72,28 +54,13 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+      - name: Build & resolve dependencies
+        run: mvn clean compile
 
-      - name: Build with purge-local-repo
-        if: ${{ github.event.inputs.purge == 'true' }}
-        run: mvn clean install -Ppurge-local-repo -DresetCache
+      - name: Run tests on Grid (Ubuntu)
+        run: mvn test -DrunMode=grid
 
-      - name: Build normally
-        if: ${{ github.event.inputs.purge != 'true' }}
-        run: mvn clean install
-
-      - name: Run tests on ${{ matrix.browser }}
-        run: mvn clean test -Dselenium.hub=http://localhost:4444 \
-          -Dbrowser=${{ matrix.browser }} -DrunMode=grid
-
-      - name: Generate Allure Report
-        if: always()
+      - name: Generate Allure report
         run: mvn allure:report
 
       - name: Upload Allure results
