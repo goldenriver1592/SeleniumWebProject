@@ -72,7 +72,7 @@ jobs:
 
   merge-and-deploy:
     runs-on: ubuntu-latest
-    needs: grid-tests
+    needs: test-linux
     if: always()
     timeout-minutes: 15
 
