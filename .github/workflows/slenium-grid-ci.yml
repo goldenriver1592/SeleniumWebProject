@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: ["chrome", "firefox", "edge"]
+        browser: ["chrome", "edge", "firefox"]
 
     services:
       selenium-hub:
