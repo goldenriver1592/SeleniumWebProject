@@ -21,14 +21,14 @@ public class DriverFactory {
     private static final ThreadLocal<WebDriverWait> tlWait = new ThreadLocal<>();
     private static final Logger log = LoggerFactory.getLogger(DriverFactory.class);
 
-    public static void initDriver(String browserName, DesiredCapabilities caps) throws MalformedURLException {
-        String runMode = System.getProperty("runMode", "local");
+    public static void initDriver(String runMode, String browserName, DesiredCapabilities caps) throws MalformedURLException {
 
         if (runMode.equalsIgnoreCase("grid")) {
             try {
                 String hubHost = System.getProperty("hub.host", "localhost");
                 String hubPort = System.getProperty("hub.port", "4444");
                 URL gridUrl = new URL("http://" + hubHost + ":" + hubPort + "/wd/hub");
+                System.out.println("Grid URL: " + gridUrl);
                 tlDriver.set(new RemoteWebDriver(gridUrl, caps));
                 tlWait.set(new WebDriverWait(tlDriver.get(), Duration.ofSeconds(20)));
             } catch (SessionNotCreatedException e) {

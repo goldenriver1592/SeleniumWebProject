@@ -9,7 +9,7 @@
         <listener class-name="utils.TestListener"/>
     </listeners>
 
-    <test name="${browser} Browser Test">
+    <test name="Test on ${browser} browser">
         <classes>
             <class name="tests.TestSuiteMagento"/>
         </classes>

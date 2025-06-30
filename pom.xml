@@ -74,6 +74,9 @@
 
     </dependencies>
 
+<!--    Maven filters src/test/resources/testng.xml with your CI parameters,
+writes the result to target/test-classes/testng.xml,
+and then Surefire uses that filtered file to execute your TestNG suite.    -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testResources>
