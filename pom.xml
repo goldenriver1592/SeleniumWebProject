@@ -12,6 +12,8 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <runMode>local</runMode>
+        <browser>chrome</browser>
     </properties>
 
     <dependencies>
@@ -110,7 +112,7 @@
                 <configuration>
                     <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                     <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
-                    <reportVersion>2.30.0</reportVersion>
+                    <reportVersion>2.20.1</reportVersion>
                 </configuration>
             </plugin>
 

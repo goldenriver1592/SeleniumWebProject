@@ -7,10 +7,6 @@ on:
         description: 'Select branch to test'
         required: false
         default: 'main'
-      purge:
-        description: 'Use the purge-local-repo profile to reset ~/.m2 before build'
-        required: false
-        default: 'false'
   push:
     branches: [main]
   pull_request:
@@ -89,9 +85,9 @@ jobs:
 
       - name: Download & Install Allure CLI
         run: |
-          wget https://github.com/allure-framework/allure2/releases/download/2.19.0/allure-2.19.0.tgz
-          sudo tar zxvf allure-2.19.0.tgz -C /opt/
-          sudo ln -s /opt/allure-2.19.0/bin/allure /usr/local/bin/allure
+          wget https://github.com/allure-framework/allure2/releases/download/2.20.1/allure-2.20.1.tgz
+          sudo tar zxvf allure-2.20.1.tgz -C /opt/
+          sudo ln -s /opt/allure-2.20.1/bin/allure /usr/local/bin/allure
 
       - name: Generate merged Allure report
         run: |
